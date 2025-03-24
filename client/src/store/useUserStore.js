@@ -27,7 +27,7 @@ export const useUserStore = create(
         toggleDarkMode: () => {
           toast.success("Dark mode toggled!", {
             duration: 500,
-            position: "top-center",
+            position: "bottom-left",
           });
           set((state) => {
             const newMode = !state.darkMode;
