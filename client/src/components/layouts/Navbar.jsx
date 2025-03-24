@@ -20,9 +20,9 @@ const Navbar = () => {
   // Navigation items
   const navItems = [
     { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Services", path: "/services" },
-    { name: "Contact Us", path: "/contact" },
+    { name: "Record", path: "/record" },
+    { name: "Logs", path: "/logs" },
+    // { name: "Contact Us", path: "/contact" },
   ];
 
 
@@ -42,11 +42,11 @@ const Navbar = () => {
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
               <span
-                className={`font-bold text-xl ${
-                  darkMode ? "text-white" : "text-gray-900"
-                }`}
+                className={`font-bold text-2xl dark:text-white text-gray-900
+               `}
               >
-                YourLogo
+                 SD
+                  <span className="text-green-600 dark:text-green-400">DL</span>
               </span>
             </Link>
           </div>
@@ -60,12 +60,8 @@ const Navbar = () => {
                   to={item.path}
                   className={`px-3 py-2 rounded-md text-sm font-medium ${
                     location.pathname === item.path
-                      ? darkMode
-                        ? "bg-gray-700 text-white"
-                        : "bg-gray-100 text-gray-900"
-                      : darkMode
-                      ? "text-gray-300 hover:bg-gray-700 hover:text-white"
-                      : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                      ? "dark:bg-gray-700 dark:text-white bg-gray-200 text-gray-900"
+                      :"dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                   }`}
                 >
                   {item.name}
@@ -89,53 +85,6 @@ const Navbar = () => {
                 <Moon size={20} />
               )}
             </Button>
-
-            {/* User menu */}
-            {loggedIn ? (
-              <div className="flex items-center space-x-3">
-                <Avatar onClick={() => {}} className="h-8 w-8 cursor-pointer hover:bg-amber-200 hover:text-black">
-                  <AvatarImage
-                    src={user?.avatarUrl || ""}
-                    alt={user?.name || "User"}
-                  />
-                  <AvatarFallback>
-                    {user?.name?.charAt(0) || "U"}
-                  </AvatarFallback>
-                </Avatar>
-                {/* <Button
-                  variant="destructive"
-                  size="sm"
-                  onClick={logOut}
-                  className={`rounded-md`}
-                >
-                  <LogOut size={16} className="mr-1" />
-                  Logout
-                </Button> */}
-                <Link
-                  to="/dashboard"
-                  className={`flex items-center px-3 py-2 rounded-md text-sm font-medium 
-                    
-                    dark:bg-green-600 dark: text-black dark:hover:bg-green-700
-                      bg-green-500  hover:bg-green-600
-                  `}
-                >
-                  <User size={16} className="mr-1" />
-                  Dashboard
-                </Link>
-              </div>
-            ) : (
-              <Link
-                to="/login"
-                className={`flex items-center px-3 py-2 rounded-md text-sm font-medium ${
-                  darkMode
-                    ? "bg-blue-600 text-white hover:bg-blue-700"
-                    : "bg-blue-500 text-white hover:bg-blue-600"
-                }`}
-              >
-                {/* <User size={16} className="mr-1" /> */}
-                Login
-              </Link>
-            )}
           </div>
 
           {/* Mobile menu button */}

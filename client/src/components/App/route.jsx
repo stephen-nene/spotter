@@ -20,14 +20,8 @@ const DashRoutes = {
 };
 
 import Home from "../pages/public/Home.jsx";
-import Shop from "../pages/public/Shop.jsx";
-
-import Contact from "../pages/public/Contact.jsx";
-import About from "../pages/public/About.jsx"
-import Blogs from "../pages/public/Blogs.jsx";
-import Training from "../pages/public/Training.jsx";
-import TenderTraining from "../pages/public/TenderTraining.jsx"
-import Knowledgehub from "../pages/public/Knowledgehub.jsx"
+import Record from "../pages/public/Record.jsx";
+import Logs from "../pages/public/Logs.jsx";
 
 // import Training from "../pages/public/training.jsx";
 import Error404 from "../pages/utils/Error404.jsx";
@@ -37,13 +31,8 @@ import ComingSoon from "../pages/utils/ComminSoon.jsx";
 export const routes = [
   // Public Routes
   { path: "/", element: Home },
-  { path: "/shop", element: Shop },
-  { path: "/contact", element: Contact },
-  { path: "/blogs", element: Blogs },
-  { path: "/about", element: About },
-  { path: "/knowledge-hub", element: Knowledgehub },
-  { path: "/training", element: Training },
-  { path: "/tender-training", element: TenderTraining },
+  { path: "/record", element: Record },
+  { path: "/logs", element: Logs },
 
   // authentication routes
   { path: "/login", element: AuthRoutes.Login },

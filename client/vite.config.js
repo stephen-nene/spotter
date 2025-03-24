@@ -1,28 +1,31 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 
+// Environment variables
 const host = process.env.TAURI_DEV_HOST;
+const backendUrl = process.env.BACKEND_URL || "http://localhost:3000";
+const isTauriBuild = process.env.TAURI_ENV === "true";
 
-// https://vitejs.dev/config/
 export default defineConfig(async () => ({
   plugins: [react(), tailwindcss()],
+
+  // Path aliases
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "~": path.resolve(__dirname, "./public"),
     },
   },
-  // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
-  //
-  // 1. prevent vite from obscuring rust errors
-  clearScreen: false,
-  // 2. tauri expects a fixed port, fail if that port is not available
+
+  // Development server configuration
   server: {
     port: 5173,
     strictPort: true,
-    host: host || false,
+    host: host || "0.0.0.0",
+
+    // Hot Module Replacement
     hmr: host
       ? {
           protocol: "ws",
@@ -30,9 +33,65 @@ export default defineConfig(async () => ({
           port: 5173,
         }
       : undefined,
+
+    // Proxy configuration
+    proxy: {
+      // API forwarding
+      "/api": {
+        target: backendUrl,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+        configure: (proxy) => {
+          proxy.on("error", (err) => {
+            console.log("Proxy Error:", err);
+          });
+          proxy.on("proxyReq", (proxyReq) => {
+            console.log("Proxying:", proxyReq.path);
+          });
+        },
+      },
+
+      // WebSocket proxy example
+      "/socket.io": {
+        target: backendUrl,
+        ws: true,
+        changeOrigin: true,
+      },
+    },
+
     watch: {
-      // 3. tell vite to ignore watching `src-tauri`
       ignored: ["**/src-tauri/**"],
     },
+  },
+
+  // Build optimizations
+  build: {
+    // Tauri supports es2021
+    target: isTauriBuild ? ["es2021", "chrome100", "safari15"] : "esnext",
+
+    // Smaller chunk size for Tauri
+    chunkSizeWarningLimit: isTauriBuild ? 500 : 1000,
+
+    // Enable sourcemaps in dev
+    sourcemap: !isTauriBuild,
+
+    // Output analysis
+    rollupOptions: {
+      output: {
+        manualChunks: isTauriBuild
+          ? undefined
+          : {
+              react: ["react", "react-dom"],
+              vendor: ["lodash", "axios"],
+            },
+      },
+    },
+  },
+  
+
+  // Environment variables
+  define: {
+    __APP_ENV__: JSON.stringify(process.env.NODE_ENV || "development"),
+    __BACKEND_URL__: JSON.stringify(isTauriBuild ? "/api" : backendUrl),
   },
 }));
