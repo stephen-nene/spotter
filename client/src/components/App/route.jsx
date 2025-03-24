@@ -35,11 +35,11 @@ export const routes = [
   { path: "/logs", element: Logs },
 
   // authentication routes
-  { path: "/login", element: AuthRoutes.Login },
-  { path: "/register", element: AuthRoutes.Register },
-  { path: "/forgot", element: AuthRoutes.Forgot },
-  { path: "/activate/:token", element: AuthRoutes.Activate },
-  { path: "/reset/:token", element: AuthRoutes.Reset },
+  // { path: "/login", element: AuthRoutes.Login },
+  // { path: "/register", element: AuthRoutes.Register },
+  // { path: "/forgot", element: AuthRoutes.Forgot },
+  // { path: "/activate/:token", element: AuthRoutes.Activate },
+  // { path: "/reset/:token", element: AuthRoutes.Reset },
 
   // Protected Routes
   {
@@ -56,35 +56,35 @@ export const routes = [
   //   roles: ["admin", "user"],
   // },
 
-  {
-    path: "/dashboard/",
-    element: DashRoutes.DashboardLayout,
-    protected: true,
-    roles: ["admin", "user"],
-    children: [
-      {
-        path: "",
-        element: DashRoutes.Dashboard,
-        protected: true,
-        roles: ["admin", "user"],
-      },
-      {
-        path: "products",
-        element: DashRoutes.Dashboard,
-        protected: true,
-        roles: ["admin", "user"],
-      },
-      {
-        path: "profile",
-        element: DashRoutes.Profile,
-        protected: true,
-        roles: ["admin", "user"],
-      },
+  // {
+  //   path: "/dashboard/",
+  //   element: DashRoutes.DashboardLayout,
+  //   protected: true,
+  //   roles: ["admin", "user"],
+  //   children: [
+  //     {
+  //       path: "",
+  //       element: DashRoutes.Dashboard,
+  //       protected: true,
+  //       roles: ["admin", "user"],
+  //     },
+  //     {
+  //       path: "products",
+  //       element: DashRoutes.Dashboard,
+  //       protected: true,
+  //       roles: ["admin", "user"],
+  //     },
+  //     {
+  //       path: "profile",
+  //       element: DashRoutes.Profile,
+  //       protected: true,
+  //       roles: ["admin", "user"],
+  //     },
 
-      // Add other dashboard routes as needed
-      { path: "*", element: Error404 }, // For routes that aren't implemented yet
-    ],
-  },
+  //     // Add other dashboard routes as needed
+  //     { path: "*", element: Error404 }, // For routes that aren't implemented yet
+  //   ],
+  // },
 
   // 404 Route
   { path: "*", element: Error404 },
