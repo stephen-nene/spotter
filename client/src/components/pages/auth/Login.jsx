@@ -19,7 +19,9 @@ export default function Login() {
   const [errors, setErrors] = useState({ email: "", password: "" });
   // const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useUserStore((state) => state.user);
+  const { user, loggedIn, login,loading } = useUserStore();
+    const [serverError, setServerError] = useState("");
+
   // console.log(user);
 
   const validateForm = () => {
@@ -38,7 +40,7 @@ export default function Login() {
     e.preventDefault();
     if (validateForm()) {
       try {
-        const res = await handleServerLogin(formData, navigate);
+        const res = await login(formData, navigate);
         // console.log(res);
       } catch (error) {
         let errorMSG =
